@@ -3,7 +3,7 @@
 Process streams with generators and [co](https://www.npmjs.com/package/co).
 
  * Write code and handle exceptions in sync style.
- * Stream2 readables, writables and transforms.
+ * Stream2 writable, readable, duplex and transform.
  * Has `pipe()`ing and backpressure.
  * Works natively on io.js. Works on node with `--harmony`.
  * Backed by [co](https://www.npmjs.com/package/co) so do any co stuff.
@@ -79,6 +79,32 @@ pony.readable({
 }).pipe(downstream)
 ```
 
+### pony.duplex([opts], writeFunc(input), readFunc(output))
+
+Create a [duplex stream](https://iojs.org/api/stream.html#stream_class_stream_duplex).
+
+ * **opts** - Options object passed to [native Duplex constructor](https://iojs.org/api/stream.html#stream_new_stream_duplex_options). (optional)
+ * **writeFunc()** - See `genFunc` in writable above.
+ * **readFunc()** - See `genFunc` in readable above.
+
+```js
+/* An online AI chatbot that ignores you and outputs '42' over and over.
+ * If the bot cared about you, this would be a transform since then the
+ * input would be causally related to the output. However since the bot
+ * is ignoring you this is best modeled as a duplex.
+ */
+
+aiBot = pony.duplex(function *(input) {
+  // doesn't care, ignores input
+  while (true) yield input()
+}, function *(output) {
+  // already have an answer
+  while (true) yield output('42'), yield wait(100)
+})
+
+net.createServer(c => c.pipe(aiBot).pipe(c)).listen(8124)
+```
+
 ### pony.transform([opts], genFunc(input, output))
 
 Create a [transform stream](https://iojs.org/api/stream.html#stream_class_stream_transform).
@@ -104,6 +130,7 @@ upstream.pipe(pony.transform({
 
 ## Change log
 
+ * 0.1.0 - Added `duplex()` and updated api docs.
  * 0.0.2 - Updated header comments in code files.
  * 0.0.1 - Added a repository field in package.json.
  * 0.0.0 - First version. Has readables, writables and transforms.

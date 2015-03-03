@@ -3,12 +3,21 @@
  * MIT License. See license.txt for more info.
  */
 
-var Readable = require('./lib/readable')
-  , Writable = require('./lib/writable')
+var Writable = require('./lib/writable')
+  , Readable = require('./lib/readable')
+  , Duplex = require('./lib/transform')
   , Transform = require('./lib/transform')
   , co = require('co')
 
 module.exports = {
+
+  writable: function(opts, gen) {
+    if (typeof opts === 'function') {
+      gen = opts, opts = {};
+    }
+    opts || (opts = {});
+    return new Writable(opts, gen);
+  },
 
   readable: function(opts, gen) {
     if (typeof opts === 'function') {
@@ -18,12 +27,12 @@ module.exports = {
     return new Readable(opts, gen);
   },
 
-  writable: function(opts, gen) {
+  duplex: function(opts, genWrite, genRead) {
     if (typeof opts === 'function') {
       gen = opts, opts = {};
     }
     opts || (opts = {});
-    return new Writable(opts, gen);
+    return new Duplex(opts, genWrite, genRead);
   },
 
   transform: function(opts, gen) {
