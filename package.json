@@ -1,10 +1,14 @@
 {
   "name": "eventual-pony",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Process streams with generators",
   "main": "index.js",
   "scripts": {
     "test": "node node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/greim/eventual-pony.gif"
   },
   "keywords": [
     "streams",

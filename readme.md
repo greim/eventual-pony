@@ -99,6 +99,11 @@ upstream.pipe(pony({
 })).pipe(downstream)
 ```
 
+## Change log
+
+ * 0.0.1 - Added a repository field in package.json.
+ * 0.0.0 - First version of the module with readable, writable and transform support.
+
 ## Why "Eventual Pony"?
 
 Choosing npm names is getting hard...
