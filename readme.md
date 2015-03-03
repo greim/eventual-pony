@@ -8,9 +8,7 @@ Process streams with generators and [co](https://www.npmjs.com/package/co).
  * Backed by [co](https://www.npmjs.com/package/co) so do any co stuff.
  * Great name.
 
---------------------
-
-## Eventual Pony API
+## API Documentation
 
 ```js
 var pony = require('eventual-pony')
@@ -80,8 +78,6 @@ upstream.pipe(pony({
   }
 })).pipe(downstream)
 ```
-
---------------------
 
 ## Why "Eventual Pony"?
 
