@@ -8,8 +8,15 @@ Process streams with generators and [co](https://www.npmjs.com/package/co).
  * Backed by [co](https://www.npmjs.com/package/co) so do any co stuff.
  * Great name.
 
+## Install
+
+```bash
+npm install eventual-pony
+```
+
+## Silly example
+
 ```js
-// silly example
 var pony = require('eventual-pony')
 
 var upperify = pony.transform(function*(input, output){
