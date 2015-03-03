@@ -110,5 +110,5 @@ upstream.pipe(pony.transform({
 
 ## Why "Eventual Pony"?
 
-Choosing npm names is getting hard...
+If you're good little boys and girls, eventually you'll get a pony.
 
