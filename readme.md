@@ -8,11 +8,24 @@ Process streams with generators and [co](https://www.npmjs.com/package/co).
  * Backed by [co](https://www.npmjs.com/package/co) so do any co stuff.
  * Great name.
 
-## API Documentation
-
 ```js
+// silly example
 var pony = require('eventual-pony')
+
+var upperify = pony.transform(function*(input, output){
+  while (true) {
+    var chunk = yield input('utf8')
+    chunk = chunk.toUpperCase()
+    yield output(chunk, 'utf8')
+  }
+})
+
+fs.createReadStream('./foo')
+.pipe(upperify)
+.pipe(fs.createWriteStream('./foo-upper'))
 ```
+
+## API Documentation
 
 ### pony.writable([opts], genFunc(input))
 
