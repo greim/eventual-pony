@@ -102,7 +102,7 @@ upstream.pipe(pony({
 ## Change log
 
  * 0.0.1 - Added a repository field in package.json.
- * 0.0.0 - First version of the module with readable, writable and transform support.
+ * 0.0.0 - First version. Has readables, writables and transforms.
 
 ## Why "Eventual Pony"?
 
