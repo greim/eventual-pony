@@ -1,0 +1,28 @@
+{
+  "name": "eventual-pony",
+  "version": "0.0.0",
+  "description": "Process streams with generators",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/.bin/mocha"
+  },
+  "keywords": [
+    "streams",
+    "generators",
+    "es6",
+    "co",
+    "async",
+    "promises",
+    "trampoline"
+  ],
+  "author": "gregreimer@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "co": "^4.4.0",
+    "lodash": "^3.3.1",
+    "native-or-bluebird": "^1.2.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0"
+  }
+}
