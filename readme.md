@@ -48,7 +48,9 @@ var sum = 0
 pony.writable({
   objectMode: true
 }, function* (input){
-  sum += yield input()
+  while (true) {
+    sum += yield input()
+  }
 }).on('end', function(){
   console.log(sum)
 })
