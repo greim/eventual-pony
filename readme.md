@@ -15,22 +15,15 @@ Process streams with generators and [co](https://www.npmjs.com/package/co).
 npm install eventual-pony
 ```
 
-## Silly example
+## Trivial example
 
 ```js
+// a completely useless transform stream
 var pony = require('eventual-pony')
-
-var upperify = pony.transform(function*(input, output){
-  while (true) {
-    var chunk = yield input('utf8')
-    chunk = chunk.toUpperCase()
-    yield output(chunk, 'utf8')
-  }
+var noop = pony.transform(function*(input, output){
+  while (true) yield output(yield input())
 })
-
-fs.createReadStream('./foo')
-.pipe(upperify)
-.pipe(fs.createWriteStream('./foo-upper'))
+upstream.pipe(noop).pipe(downstream)
 ```
 
 ## API Documentation
@@ -40,6 +33,7 @@ fs.createReadStream('./foo')
 Create a [writable stream](https://iojs.org/api/stream.html#stream_class_stream_writable).
 
  * **opts** - Options object passed to [native Writable constructor](https://iojs.org/api/stream.html#stream_new_stream_writable_options). (optional)
+ * **genFunc()** - A generator function passed directly to co.
  * **input([encoding])** - Returns yieldable for next available upstream value.  If not in object mode and `encoding` is provided, produces string, otherwise a buffer.
 
 ```js
@@ -61,6 +55,7 @@ pony.writable({
 Create a [readable stream](https://iojs.org/api/stream.html#stream_class_stream_readable).
 
  * **opts** - Options object passed to [native Readable constructor](https://iojs.org/api/stream.html#stream_new_stream_readable_options). (optional)
+ * **genFunc()** - A generator function passed directly to co.
  * **output(value, [encoding])** - Sends a value downstream. Returns a yieldable that resolves more or less quickly depending on how fast downstream is accepting data.
 
 ```js
@@ -84,8 +79,8 @@ pony.readable({
 Create a [duplex stream](https://iojs.org/api/stream.html#stream_class_stream_duplex).
 
  * **opts** - Options object passed to [native Duplex constructor](https://iojs.org/api/stream.html#stream_new_stream_duplex_options). (optional)
- * **writeFunc()** - See `genFunc` in writable above.
- * **readFunc()** - See `genFunc` in readable above.
+ * **writeFunc()** - See `genFunc()` in writable above.
+ * **readFunc()** - See `genFunc()` in readable above.
 
 ```js
 /* An online AI chatbot that ignores you and repeats '42' over and over.
@@ -110,6 +105,7 @@ net.createServer(c => c.pipe(aiBot).pipe(c)).listen(8124)
 Create a [transform stream](https://iojs.org/api/stream.html#stream_class_stream_transform).
 
  * **opts** - Options object passed to [native Transform constructor](https://iojs.org/api/stream.html#stream_new_stream_transform_options). (optional)
+ * **genFunc()** - A generator function passed directly to co.
  * **input([encoding])** - Returns a yieldable on next available upstream value. If not in object mode and `encoding` is provided, produces string, otherwise a buffer.
  * **input.ended()** - Once this returns `true` the input is ended, so `output()` any remaining stuff.
  * **output(value, [encoding])** - Sends a value downstream. Returns a yieldable that resolves more or less quickly depending on how fast downstream is accepting data.
