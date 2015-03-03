@@ -88,7 +88,7 @@ Create a [duplex stream](https://iojs.org/api/stream.html#stream_class_stream_du
  * **readFunc()** - See `genFunc` in readable above.
 
 ```js
-/* An online AI chatbot that ignores you and outputs '42' over and over.
+/* An online AI chatbot that ignores you and repeats '42' over and over.
  * If the bot cared about you, this would be a transform since then the
  * input would be causally related to the output. However since the bot
  * is ignoring you this is best modeled as a duplex.
@@ -96,10 +96,10 @@ Create a [duplex stream](https://iojs.org/api/stream.html#stream_class_stream_du
 
 aiBot = pony.duplex(function *(input) {
   // doesn't care, ignores input
-  while (true) yield input()
+  while (true) let q = yield input(), q = null
 }, function *(output) {
   // already have an answer
-  while (true) yield output('42'), yield wait(100)
+  while (true) yield output('42'), yield wait(333)
 })
 
 net.createServer(c => c.pipe(aiBot).pipe(c)).listen(8124)
