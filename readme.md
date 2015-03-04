@@ -4,7 +4,7 @@ Process streams with generators and [co](https://www.npmjs.com/package/co).
 
  * Write code and handle exceptions in sync style.
  * Create actual streams2 streams with `pipe()`, backpressure, object mode, high water mark, etc.
- * Works natively on io.js; on node 0.11+ with `--harmony`.
+ * Works natively on io.js. Works on node 0.11 or higher with `--harmony`.
  * Yield [co yieldables](https://www.npmjs.com/package/co#yieldables) from your flow with wild abandon.
  * This theoretically all even works. Supposedly. Would love issues and PRs!
  * Fast? I don't know. Maybe not. Need benchmarks.
