@@ -5,7 +5,7 @@
 
 var Writable = require('./lib/writable')
   , Readable = require('./lib/readable')
-  , Duplex = require('./lib/transform')
+  , Duplex = require('./lib/duplex')
   , Transform = require('./lib/transform')
   , co = require('co')
 
@@ -27,12 +27,15 @@ module.exports = {
     return new Readable(opts, gen);
   },
 
-  duplex: function(opts, genWrite, genRead) {
+  duplex: function(opts, writeToMe, readFromMe) {
     if (typeof opts === 'function') {
-      gen = opts, opts = {};
+      var args = [].slice.call(arguments);
+      opts = {};
+      writeToMe = args[0];
+      readFromMe = args[1];
     }
     opts || (opts = {});
-    return new Duplex(opts, genWrite, genRead);
+    return new Duplex(opts, writeToMe, readFromMe);
   },
 
   transform: function(opts, gen) {
